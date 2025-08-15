@@ -8,6 +8,7 @@
     ansible.builtin.yum:
       name: nodejs
       state: installed
+      disable_gpg_check: yes
   - name : check roboshop user exist or not
     ansible.builtin.command: id roboshop
     register: out
@@ -30,4 +31,12 @@
     ansible.builtin.file:
      path: /app
      state: directory
-     
+  - name: download catalogue artifcat
+    ansible.builtin.get_url:
+      url: https://roboshop-builds.s3.amazonaws.com/catalogue.zip
+      dest: /app
+  - name: extract catalogue artifcat
+    ansible.builtin.unarchive:
+      src: /tmp/catalogue.zip
+      dest: /app
+      remote_src: yes
