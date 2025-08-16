@@ -45,10 +45,10 @@
     args:
       chdir: /app
   - name: copy catalogue service
-    ansible.builtin.service:
+    ansible.builtin.copy:
       src: catalogue.service
       dest: /etc/systemd/system/catalogue.service  
-  - name: deamon reload
+  - name: daemon reload
     ansible.builtin.systemd:
       daemon_reload: true
   - name: copy mongo repo to yum.repos.d
