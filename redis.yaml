@@ -17,10 +17,10 @@
         state: installed
 
     - name: allow remote connection to redis
-      ansible.builtin.replace:
+      ansible.builtin.lineinfile:
         path: /etc/redis.conf
-        regexp: '^bind 127.0.0.1'
-        replace: 'bind 0.0.0.0'
+        regexp: '^bind '
+        line: 'bind 0.0.0.0'
 
     - name: disable protected mode
       ansible.builtin.replace:
