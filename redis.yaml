@@ -16,11 +16,11 @@
         name: redis
         state: installed
 
-    - name: allow remote connection to redis
-      ansible.builtin.replace:
-        path: /etc/redis.conf
-        regexp: '127.0.0.1'
-        replace: '0.0.0.0'
+    - name: set redis bind address
+      ansible.builtin.lineinfile:
+       path: /etc/redis/redis.conf
+       regexp: '^bind '
+      line: 'bind 0.0.0.0 ::1'
 
     - name: unmask redis service if masked
       ansible.builtin.command: systemctl unmask redis.service
