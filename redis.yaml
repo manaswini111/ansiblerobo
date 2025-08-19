@@ -16,11 +16,12 @@
         name: redis
         state: installed
 
-    - name: Allow remote connection by updating bind address in correct Redis config
+    - name: Allow remote connection by updating bind address in Redis config
       ansible.builtin.replace:
         path: /etc/redis.conf
-        regexp: '127\.0\.0\.1'
-        replace: '0.0.0.0'
+        regexp: '^bind\s+127\.0\.0\.1.*'
+        replace: 'bind 0.0.0.0'
+
 
     
 
