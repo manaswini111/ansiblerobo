@@ -17,7 +17,13 @@
         name: redis
         state: present
 
-    - name: Ensure bind line is correct
+    - name: Remove any broken bind lines
+      ansible.builtin.lineinfile:
+        path: /etc/redis/redis.conf
+        regexp: '^bind0.0.0.0 -::1'
+        state: absent
+
+    - name: Ensure correct bind line
       ansible.builtin.lineinfile:
         path: /etc/redis/redis.conf
         regexp: '^bind'
@@ -34,5 +40,5 @@
     - name: Start and enable Redis service
       ansible.builtin.service:
         name: redis
-        state: started
+        state: restarted
         enabled: yes
